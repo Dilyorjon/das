@@ -83,43 +83,29 @@ public class UserService implements UserDetailsService {
   }
 
 
-//  public UserDTO update(UserDTO userDto) {
-//
-//    User user = findById(userDto.getId());
-//    if (user != null) {
-//      BeanUtils.copyProperties(userDto, user, "password");
-//
-//      Set<Role> roles = user.getRoles();
-//
-//      switch (userDto.getRole()) {
-//
-//        case "Rektorat":
-//
-//          roles.add(roleRepository.findByName("ROLE_VIEWER_ADMIN"));
-//          break;
-//        case "O'quv-uslubiy bo'lim":
-//          roles.add(roleRepository.findByName("ROLE_ADMIN"));
-//          break;
-//        case "Xodimlar bo'lim":
-//          roles.add(roleRepository.findByName("ROLE_STAFF_ADMIN"));
-//          break;
-//        case "Dekanat":
-//          roles.add(roleRepository.findByName("ROLE_DEAN_ADMIN"));
-//          break;
-//        case "Sifat nazorati":
-//          roles.add(roleRepository.findByName("ROLE_QUALITY_ADMIN"));
-//          break;
-//        case "User":
-//          roles.add(roleRepository.findByName("ROLE_USER"));
-//
-//          break;
-//      }
-//
-//      user.setRoles(roles);
-//      userDao.save(user);
-//    }
-//    return userDto;
-//  }
+  public UserDTO update(UserDTO userDto) {
+
+    User user = findById(userDto.getId());
+    if (user != null) {
+      BeanUtils.copyProperties(userDto, user, "password");
+
+      Set<Role> roles = user.getRoles();
+
+      switch (user.getRole()) {
+
+        case "Admin":
+          roles.add(roleRepository.findByName("ROLE_SUPER_ADMIN"));
+          break;
+        case "User":
+          roles.add(roleRepository.findByName("ROLE_USER"));
+          break;
+      }
+
+      user.setRoles(roles);
+      userDao.save(user);
+    }
+    return userDto;
+  }
 
 
   public User save(UserDTO user) {
